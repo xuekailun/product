@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moon.product.dao.ProductInfoDao">
+
+    <select id="selectProductStatus" parameterType="map" resultType="com.moon.product.entity.ProductInfo">
+        select * from product_info where product_status = #{status}
+        <if test="type != null">
+            and category_type = #{type}
+        </if>
+    </select>
+
+    <select id="selectProductListById" parameterType="list" resultType="com.moon.product.entity.ProductInfo">
+        select * from product_info where product_id in
+        <foreach item="productId" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </select>
+
+    <update id="updateProductById" parameterType="com.moon.product.entity.ProductInfo">
+        update product_info set product_stock = #{productStock} where product_id=#{productId}
+    </update>
+
+</mapper>

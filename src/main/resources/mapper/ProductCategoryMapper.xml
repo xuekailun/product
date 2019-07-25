@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moon.product.dao.ProductCategoryDao">
+
+    <resultMap id="BaseResultMap" type="com.moon.product.entity.ProductCategory">
+        <id column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="category_type" property="categoryType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="productInfos" ofType="com.moon.product.entity.ProductInfo">
+            <id column="product_id" property="productId"/>
+            <result column="product_name" property="productName"/>
+        </collection>
+    </resultMap>
+    
+    <select id="selectProductCateAndInfo" resultMap="BaseResultMap">
+        SELECT
+            c.*, i.product_id,i.product_name
+        FROM
+            product_category c
+        LEFT JOIN product_info i ON c.category_type = i.category_type
+    </select>
+
+    <select id="selectProcutType" resultType="com.moon.product.entity.ProductCategory">
+        select * from product_category
+    </select>
+
+</mapper>
